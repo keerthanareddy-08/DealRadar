@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DealRadar — Your Radar for the Best Local Deals</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ LANDING PAGE ============ -->
+<div class="landing-page" id="landing-page">
+  <div class="landing-logo-wrap">
+    <img src="" alt="DealRadar Logo" class="landing-logo" id="landing-logo-img">
+    <p class="landing-tagline">Your Radar for the Best Local Deals</p>
+  </div>
+
+  <div class="login-choice-wrap">
+    <p style="text-align:center; font-size:13px; color:var(--text-light); margin-bottom:4px; font-weight:600; letter-spacing:0.5px; text-transform:uppercase;">Choose how to continue</p>
+
+    <div class="login-choice-card" onclick="openAuth('customer')">
+      <div class="login-choice-icon blue-icon">🛍️</div>
+      <div class="login-choice-info">
+        <h3>Customer Login</h3>
+        <p>Find deals & shop from local stores</p>
+      </div>
+      <span class="login-choice-arrow">›</span>
+    </div>
+
+    <div class="login-choice-card green" onclick="openAuth('store')">
+      <div class="login-choice-icon green-icon">🏪</div>
+      <div class="login-choice-info">
+        <h3>Store Owner Login</h3>
+        <p>Manage your store & sell online</p>
+      </div>
+      <span class="login-choice-arrow">›</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CUSTOMER AUTH PANEL ============ -->
+<div class="auth-panel" id="auth-customer">
+  <div class="auth-hero">
+    <img src="" alt="DealRadar" class="auth-hero-logo">
+    <div class="auth-hero-title">Customer Portal</div>
+    <div class="auth-hero-sub">Welcome back! Sign in to find deals.</div>
+  </div>
+
+  <div class="auth-body">
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchAuthTab('customer','login',this)">Login</button>
+      <button class="auth-tab" onclick="switchAuthTab('customer','register',this)">Register</button>
+    </div>
+
+    <!-- Customer Login Form -->
+    <div id="customer-login-form" class="auth-form">
+      <div class="form-group">
+        <label class="form-label">Username</label>
+        <input type="text" class="form-input" placeholder="Enter your username" id="c-username">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-input" placeholder="Enter your password" id="c-password">
+      </div>
+      <a class="forgot-link" onclick="showPanel('panel-c-forgot')">Forgot Password?</a>
+      <button class="btn btn-primary btn-block btn-lg" onclick="customerLogin()">Sign In</button>
+      <div class="divider"><span>new to DealRadar?</span></div>
+      <button class="btn btn-outline btn-block" onclick="switchAuthTab('customer','register', document.querySelectorAll('#auth-customer .auth-tab')[1])">Create Account</button>
+    </div>
+
+    <!-- Customer Register Form -->
+    <div id="customer-register-form" class="auth-form hidden">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input type="text" class="form-input" placeholder="Your full name" id="c-reg-name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="your@email.com" id="c-reg-email">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone Number</label>
+        <input type="tel" class="form-input" placeholder="+91 XXXXX XXXXX" id="c-reg-phone">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-input" placeholder="Create a strong password" id="c-reg-password">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Home Address</label>
+        <input type="text" class="form-input" placeholder="Your full address" id="c-reg-address">
+      </div>
+      <button class="btn btn-primary btn-block btn-lg" onclick="customerRegister()">Create Account</button>
+      <div class="divider"><span>already have an account?</span></div>
+      <button class="btn btn-ghost btn-block" onclick="switchAuthTab('customer','login', document.querySelectorAll('#auth-customer .auth-tab')[0])">Back to Login</button>
+    </div>
+  </div>
+
+  <button class="panel-back" style="position:fixed;top:16px;left:16px;z-index:700;" onclick="closeAuth('customer')">‹</button>
+</div>
+
+<!-- ============ CUSTOMER FORGOT PASSWORD PANEL ============ -->
+<div class="panel" id="panel-c-forgot">
+  <div class="panel-header">
+    <button class="panel-back" onclick="hidePanel('panel-c-forgot')">‹</button>
+    <span class="panel-title">Reset Password</span>
+  </div>
+  <div class="panel-content" style="max-width:440px;margin:0 auto;">
+    <div id="forgot-step-1">
+      <p style="font-size:14px;color:var(--text-mid);margin-bottom:20px;line-height:1.6;">Enter your email address and we'll send you a verification code to reset your password.</p>
+      <div class="form-group" style="margin-bottom:16px;">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="your@email.com" id="forgot-email">
+      </div>
+      <button class="btn btn-primary btn-block" onclick="sendOTP()">Send Verification Code</button>
+    </div>
+    <div id="forgot-step-2" class="hidden">
+      <p style="font-size:14px;color:var(--text-mid);margin-bottom:20px;line-height:1.6;">Enter the 6-digit code sent to your email.</p>
+      <div class="form-group" style="margin-bottom:16px;">
+        <label class="form-label">Verification Code</label>
+        <input type="text" class="form-input" placeholder="Enter 6-digit OTP" maxlength="6" id="forgot-otp">
+      </div>
+      <button class="btn btn-primary btn-block" onclick="verifyOTP()">Verify Code</button>
+    </div>
+    <div id="forgot-step-3" class="hidden">
+      <p style="font-size:14px;color:var(--text-mid);margin-bottom:20px;line-height:1.6;">Create your new password.</p>
+      <div class="form-group" style="margin-bottom:12px;">
+        <label class="form-label">New Password</label>
+        <input type="password" class="form-input" placeholder="New password" id="new-pass">
+      </div>
+      <div class="form-group" style="margin-bottom:16px;">
+        <label class="form-label">Confirm Password</label>
+        <input type="password" class="form-input" placeholder="Confirm new password" id="confirm-pass">
+      </div>
+      <button class="btn btn-primary btn-block" onclick="resetPassword()">Reset Password</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ STORE OWNER AUTH PANEL ============ -->
+<div class="auth-panel" id="auth-store">
+  <div class="auth-hero" style="background: linear-gradient(120deg, var(--green-dark) 0%, var(--green) 60%, var(--teal) 100%);">
+    <img src="" alt="DealRadar" class="auth-hero-logo">
+    <div class="auth-hero-title">Store Owner Portal</div>
+    <div class="auth-hero-sub">Manage your store & grow your business.</div>
+  </div>
+
+  <div class="auth-body">
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchAuthTab('store','login',this)">Login</button>
+      <button class="auth-tab" onclick="switchAuthTab('store','register',this)">Register</button>
+    </div>
+
+    <!-- Store Login Form -->
+    <div id="store-login-form" class="auth-form">
+      <div class="form-group">
+        <label class="form-label">Store ID</label>
+        <input type="text" class="form-input" placeholder="e.g. STR-48291" id="s-storeid">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-input" placeholder="Enter your password" id="s-password">
+      </div>
+      <a class="forgot-link" onclick="showPanel('panel-s-forgot')">Forgot Password?</a>
+      <button class="btn btn-green btn-block btn-lg" onclick="storeLogin()">Sign In</button>
+      <div class="divider"><span>new store owner?</span></div>
+      <button class="btn btn-outline btn-block" style="color:var(--green);border-color:var(--green);" onclick="switchAuthTab('store','register', document.querySelectorAll('#auth-store .auth-tab')[1])">Register Your Store</button>
+    </div>
+
+    <!-- Store Register Form -->
+    <div id="store-register-form" class="auth-form hidden">
+      <div class="form-group">
+        <label class="form-label">Your Full Name</label>
+        <input type="text" class="form-input" placeholder="Owner's full name" id="s-reg-name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Store Name</label>
+        <input type="text" class="form-input" placeholder="Your store name" id="s-reg-storename">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Store Category</label>
+        <select class="form-select" id="s-reg-category">
+          <option value="">Select category...</option>
+          <option value="grocery">🛒 Grocery</option>
+          <option value="food">🍔 Food</option>
+          <option value="toys">🧸 Toys</option>
+          <option value="clothing">👗 Clothing</option>
+          <option value="pharmacy">💊 Pharmacy</option>
+          <option value="electronics">📱 Electronics</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone Number</label>
+        <input type="tel" class="form-input" placeholder="+91 XXXXX XXXXX" id="s-reg-phone">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="store@email.com" id="s-reg-email">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Store Address</label>
+        <input type="text" class="form-input" placeholder="Full store address" id="s-reg-address">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-input" placeholder="Create a strong password" id="s-reg-password">
+      </div>
+      <button class="btn btn-green btn-block btn-lg" onclick="storeRegisterRequest()">Request for Login</button>
+      <div class="divider"><span>already registered?</span></div>
+      <button class="btn btn-ghost btn-block" onclick="switchAuthTab('store','login', document.querySelectorAll('#auth-store .auth-tab')[0])">Back to Login</button>
+    </div>
+  </div>
+
+  <button class="panel-back" style="position:fixed;top:16px;left:16px;z-index:700;" onclick="closeAuth('store')">‹</button>
+</div>
+
+<!-- ============ STORE FORGOT PASSWORD PANEL ============ -->
+<div class="panel" id="panel-s-forgot">
+  <div class="panel-header">
+    <button class="panel-back" onclick="hidePanel('panel-s-forgot')">‹</button>
+    <span class="panel-title">Reset Password</span>
+  </div>
+  <div class="panel-content" style="max-width:440px;margin:0 auto;">
+    <div id="s-forgot-step-1">
+      <p style="font-size:14px;color:var(--text-mid);margin-bottom:20px;line-height:1.6;">Enter your registered email and we'll send a verification code.</p>
+      <div class="form-group" style="margin-bottom:16px;">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="store@email.com" id="s-forgot-email">
+      </div>
+      <button class="btn btn-green btn-block" onclick="storeSendOTP()">Send Verification Code</button>
+    </div>
+    <div id="s-forgot-step-2" class="hidden">
+      <p style="font-size:14px;color:var(--text-mid);margin-bottom:20px;line-height:1.6;">Enter the 6-digit code sent to your email.</p>
+      <div class="form-group" style="margin-bottom:16px;">
+        <label class="form-label">Verification Code</label>
+        <input type="text" class="form-input" placeholder="Enter 6-digit OTP" maxlength="6" id="s-forgot-otp">
+      </div>
+      <button class="btn btn-green btn-block" onclick="storeVerifyOTP()">Verify Code</button>
+    </div>
+    <div id="s-forgot-step-3" class="hidden">
+      <p style="font-size:14px;color:var(--text-mid);margin-bottom:20px;line-height:1.6;">Create your new password.</p>
+      <div class="form-group" style="margin-bottom:12px;">
+        <label class="form-label">New Password</label>
+        <input type="password" class="form-input" placeholder="New password" id="s-new-pass">
+      </div>
+      <div class="form-group" style="margin-bottom:16px;">
+        <label class="form-label">Confirm Password</label>
+        <input type="password" class="form-input" placeholder="Confirm new password" id="s-confirm-pass">
+      </div>
+      <button class="btn btn-green btn-block" onclick="storeResetPassword()">Reset Password</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ REQUEST SUBMITTED MODAL ============ -->
+<div class="modal-overlay hidden" id="modal-request-submitted">
+  <div class="modal-box">
+    <div class="approval-modal">
+      <div class="approval-icon">📨</div>
+      <div class="approval-title">Request Submitted!</div>
+      <p class="approval-msg">Your store registration request has been sent to the admin for approval. You'll be notified once it's reviewed.</p>
+      <button class="btn btn-primary btn-block" style="margin-top:20px;" onclick="simulateApproval()">OK</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ APPROVED MODAL ============ -->
+<div class="modal-overlay hidden" id="modal-approved">
+  <div class="modal-box">
+    <div class="approval-modal">
+      <div class="approval-icon">🎉</div>
+      <div class="approval-title">Request Approved!</div>
+      <p class="approval-msg">Congratulations! The admin has approved your store. Here is your unique Store ID — use it to log in.</p>
+      <div class="store-id-reveal">
+        <div class="label">YOUR STORE ID</div>
+        <div class="sid" id="generated-store-id">STR-00000</div>
+      </div>
+      <p class="approval-msg" style="font-size:13px;">Please save this ID. You'll need it every time you log in.</p>
+      <button class="btn btn-green btn-block" style="margin-top:20px;" onclick="goToStoreLogin()">Go to Login</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div id="toast-container"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

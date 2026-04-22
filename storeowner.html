@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DealRadar — Store Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ STORE OWNER HOME ============ -->
+<div id="store-home" style="padding-bottom:80px;">
+
+  <!-- Store Hero -->
+  <div class="store-hero">
+    <img src="" alt="DealRadar" class="sh-logo">
+    <div class="sh-title">Deal<span>Radar</span></div>
+    <div class="sh-tagline">Your Radar for the Best Local Deals</div>
+    <div class="store-badge">
+      <span class="store-badge-name" id="so-store-name">My Store</span>
+      <span class="store-badge-id" id="so-store-id">STR-00000</span>
+    </div>
+  </div>
+
+  <!-- Dashboard Cards -->
+  <div class="dashboard-body">
+    <div class="section-label" style="margin-bottom:16px;">Dashboard Overview</div>
+    <div class="dashboard-grid">
+      <div class="dash-card">
+        <div class="dash-card-icon blue">📦</div>
+        <div class="dash-card-value" id="dc-products">24</div>
+        <div class="dash-card-label">Total Products</div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-icon green">🛒</div>
+        <div class="dash-card-value" id="dc-orders">138</div>
+        <div class="dash-card-label">Total Orders</div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-icon orange">💰</div>
+        <div class="dash-card-value" id="dc-revenue">₹4,820</div>
+        <div class="dash-card-label">Today's Revenue</div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-icon teal">⭐</div>
+        <div class="dash-card-value">4.7</div>
+        <div class="dash-card-label">Avg. Rating</div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-icon purple">🚚</div>
+        <div class="dash-card-value">6</div>
+        <div class="dash-card-label">Pending Deliveries</div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-icon red">🔴</div>
+        <div class="dash-card-value" id="dc-lowstock">3</div>
+        <div class="dash-card-label">Low Stock Alerts</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PRODUCTS PANEL ============ -->
+<div class="panel" id="panel-products">
+  <div class="panel-header">
+    <button class="panel-back" onclick="hideSoPanel('panel-products')">‹</button>
+    <span class="panel-title">My Products 📦</span>
+  </div>
+  <div class="panel-content">
+    <div class="products-header">
+      <span style="font-size:14px;color:var(--text-mid);" id="product-count-label">24 products</span>
+      <button class="btn btn-primary btn-sm" onclick="showPanel('panel-add-product')">+ Add Product</button>
+    </div>
+    <div class="products-grid" id="products-grid"></div>
+  </div>
+</div>
+
+<!-- ============ ADD PRODUCT PANEL ============ -->
+<div class="panel" id="panel-add-product">
+  <div class="panel-header">
+    <button class="panel-back" onclick="hidePanel('panel-add-product')">‹</button>
+    <span class="panel-title">Add New Product</span>
+  </div>
+  <div class="panel-content" style="max-width:500px;margin:0 auto;">
+    <div class="add-product-form">
+      <div class="form-group">
+        <label class="form-label">Product Image</label>
+        <div class="img-upload-placeholder">
+          <span class="upload-icon">🖼️</span>
+          <span>Paste image URL below</span>
+        </div>
+        <input type="text" class="form-input" placeholder="https://... image URL" id="new-prod-img" style="margin-top:8px;">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Product Name</label>
+        <input type="text" class="form-input" placeholder="e.g. Basmati Rice 1kg" id="new-prod-name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Category</label>
+        <select class="form-select" id="new-prod-cat">
+          <option value="">Select category...</option>
+          <option value="grocery">🛒 Grocery</option>
+          <option value="food">🍔 Food</option>
+          <option value="toys">🧸 Toys</option>
+          <option value="clothing">👗 Clothing</option>
+          <option value="pharmacy">💊 Pharmacy</option>
+          <option value="electronics">📱 Electronics</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Price (₹)</label>
+        <input type="number" class="form-input" placeholder="0.00" id="new-prod-price">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Stock Quantity</label>
+        <input type="number" class="form-input" placeholder="e.g. 50" id="new-prod-stock">
+      </div>
+      <button class="btn btn-primary btn-block btn-lg" onclick="addProduct()">Add Product</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ EDIT PRODUCT MODAL ============ -->
+<div class="modal-overlay hidden" id="modal-edit-product">
+  <div class="modal-box">
+    <button class="modal-close" onclick="hideModal('modal-edit-product')">×</button>
+    <div class="modal-title">Edit Product ✏️</div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <input type="hidden" id="edit-prod-id">
+      <div class="form-group">
+        <label class="form-label">Product Name</label>
+        <input type="text" class="form-input" id="edit-prod-name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Price (₹)</label>
+        <input type="number" class="form-input" id="edit-prod-price">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Stock Quantity</label>
+        <input type="number" class="form-input" id="edit-prod-stock">
+      </div>
+      <div style="display:flex;gap:10px;margin-top:4px;">
+        <button class="btn btn-outline" style="flex:1;" onclick="hideModal('modal-edit-product')">Cancel</button>
+        <button class="btn btn-primary" style="flex:1;" onclick="saveProductEdit()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DELETE CONFIRM MODAL ============ -->
+<div class="modal-overlay hidden" id="modal-delete-confirm">
+  <div class="modal-box">
+    <div class="modal-title" style="color:#c0392b;">Delete Product ⚠️</div>
+    <p style="font-size:14px;color:var(--text-mid);margin-bottom:20px;">Are you sure you want to delete this product? This action cannot be undone.</p>
+    <input type="hidden" id="delete-prod-id">
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-outline" style="flex:1;" onclick="hideModal('modal-delete-confirm')">Cancel</button>
+      <button class="btn btn-danger" style="flex:1;" onclick="confirmDeleteProduct()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ORDERS PANEL ============ -->
+<div class="panel" id="panel-orders">
+  <div class="panel-header">
+    <button class="panel-back" onclick="hideSoPanel('panel-orders')">‹</button>
+    <span class="panel-title">Orders 📋</span>
+  </div>
+  <div class="panel-content">
+    <div class="orders-filter">
+      <button class="filter-chip active" onclick="filterOrders('today', this)">Today</button>
+      <button class="filter-chip" onclick="filterOrders('7days', this)">Last 7 Days</button>
+      <button class="filter-chip" onclick="filterOrders('30days', this)">Last 30 Days</button>
+      <button class="filter-chip" onclick="filterOrders('custom', this)">Custom Range</button>
+    </div>
+    <div class="date-range-row hidden" id="custom-date-range">
+      <div class="form-group" style="flex:1;">
+        <label class="form-label">From</label>
+        <input type="date" class="form-input" id="date-from">
+      </div>
+      <div class="form-group" style="flex:1;">
+        <label class="form-label">To</label>
+        <input type="date" class="form-input" id="date-to">
+      </div>
+      <button class="btn btn-primary btn-sm" style="margin-top:20px;" onclick="applyDateFilter()">Apply</button>
+    </div>
+    <p style="font-size:13px;color:var(--text-light);margin-bottom:12px;" id="orders-period-label">Showing orders for today</p>
+    <div class="orders-list" id="orders-list"></div>
+  </div>
+</div>
+
+<!-- ============ LOW STOCK PANEL ============ -->
+<div class="panel" id="panel-lowstock">
+  <div class="panel-header">
+    <button class="panel-back" onclick="hideSoPanel('panel-lowstock')">‹</button>
+    <span class="panel-title">Stock Alerts ⚠️</span>
+  </div>
+  <div class="panel-content">
+    <!-- Low Stock Section -->
+    <div class="section-subtitle">🔴 Low Stock Items</div>
+    <div class="low-stock-filter">
+      <button class="filter-chip active" onclick="filterLowStock('today', this)">Today</button>
+      <button class="filter-chip" onclick="filterLowStock('7days', this)">Last 7 Days</button>
+      <button class="filter-chip" onclick="filterLowStock('30days', this)">Last 30 Days</button>
+    </div>
+    <p style="font-size:12px;color:var(--text-light);margin-bottom:12px;" id="ls-period-label">Showing sales data for today</p>
+    <div id="low-stock-list"></div>
+
+    <div class="section-divider"></div>
+
+    <!-- Most Ordered -->
+    <div class="section-subtitle">🏆 Most Ordered Items</div>
+    <div id="most-ordered-list"></div>
+  </div>
+</div>
+
+<!-- ============ STORE OWNER ACCOUNT PANEL ============ -->
+<div class="panel" id="panel-so-account">
+  <div class="panel-header">
+    <button class="panel-back" onclick="hideSoPanel('panel-so-account')">‹</button>
+    <span class="panel-title">My Account</span>
+  </div>
+  <div>
+    <div class="so-account-header">
+      <div class="so-account-avatar">🏪</div>
+      <div class="so-account-store" id="so-acc-store-name">My Store</div>
+      <div class="so-account-id" id="so-acc-store-id">STR-00000</div>
+    </div>
+    <div class="account-form" id="so-account-form">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input type="text" class="form-input" id="so-acc-name" disabled>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Store Name</label>
+        <input type="text" class="form-input" id="so-acc-storename" disabled>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Store ID</label>
+        <input type="text" class="form-input disabled-field" id="so-acc-sid" disabled>
+        <span style="font-size:11px;color:var(--text-light);margin-top:4px;">🔒 Store ID is unique and cannot be changed</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Store Category</label>
+        <select class="form-select" id="so-acc-category" disabled>
+          <option value="grocery">🛒 Grocery</option>
+          <option value="food">🍔 Food</option>
+          <option value="toys">🧸 Toys</option>
+          <option value="clothing">👗 Clothing</option>
+          <option value="pharmacy">💊 Pharmacy</option>
+          <option value="electronics">📱 Electronics</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone Number</label>
+        <input type="tel" class="form-input" id="so-acc-phone" disabled>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" id="so-acc-email" disabled>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Store Address</label>
+        <input type="text" class="form-input" id="so-acc-address" disabled>
+      </div>
+    </div>
+    <div class="account-actions">
+      <button class="btn btn-outline" id="so-acc-edit-btn" onclick="toggleSOAccountEdit()" style="flex:1;color:var(--green);border-color:var(--green);">✏️ Edit</button>
+      <button class="btn btn-green hidden" id="so-acc-save-btn" onclick="saveSOAccount()" style="flex:1;">💾 Save</button>
+    </div>
+    <div class="logout-section">
+      <button class="btn btn-danger btn-block" onclick="logoutStore()">🚪 Logout</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ BOTTOM NAV ============ -->
+<nav class="bottom-nav" id="store-bottom-nav">
+  <button class="nav-item active" id="so-nav-home" onclick="switchSONav('home')">
+    <span class="nav-icon">🏠</span>
+    <span>Home</span>
+  </button>
+  <button class="nav-item" id="so-nav-products" onclick="switchSONav('products')">
+    <span class="nav-icon">📦</span>
+    <span>Products</span>
+  </button>
+  <button class="nav-item" id="so-nav-orders" onclick="switchSONav('orders')">
+    <span class="nav-icon">📋</span>
+    <span>Orders</span>
+  </button>
+  <button class="nav-item" id="so-nav-lowstock" onclick="switchSONav('lowstock')">
+    <span class="nav-icon">⚠️</span>
+    <span>Low Stock</span>
+  </button>
+  <button class="nav-item" id="so-nav-account" onclick="switchSONav('account')">
+    <span class="nav-icon">👤</span>
+    <span>Account</span>
+  </button>
+</nav>
+
+<!-- Toast Container -->
+<div id="toast-container"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

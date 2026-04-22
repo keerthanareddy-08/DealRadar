@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DealRadar — Shop Local Deals</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ CUSTOMER HOME ============ -->
+<div class="customer-home" id="customer-home">
+
+  <!-- Hero Section -->
+  <div class="customer-hero">
+    <img src="" alt="DealRadar" class="ch-logo">
+    <div class="ch-title">Deal<span>Radar</span></div>
+    <div class="ch-tagline">Your Radar for the Best Local Deals</div>
+    <div class="search-bar-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-bar" placeholder="Search for items, stores..." id="home-search" oninput="handleSearch(this.value)">
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="customer-body">
+    <div id="search-results-wrap" class="hidden" style="margin-bottom:24px;">
+      <div class="section-label" id="search-results-label">Results</div>
+      <div class="items-grid" id="search-results-grid"></div>
+    </div>
+
+    <div id="categories-section">
+      <p style="font-size:16px; color:var(--text-mid); margin-bottom:16px; font-weight:500;">What's on your mind today? 🤔</p>
+      <div class="categories-grid">
+        <div class="category-card" onclick="openCategory('grocery')">
+          <div class="category-emoji">🛒</div>
+          <div class="category-name">Grocery</div>
+        </div>
+        <div class="category-card" onclick="openCategory('food')">
+          <div class="category-emoji">🍔</div>
+          <div class="category-name">Food</div>
+        </div>
+        <div class="category-card" onclick="openCategory('toys')">
+          <div class="category-emoji">🧸</div>
+          <div class="category-name">Toys</div>
+        </div>
+        <div class="category-card" onclick="openCategory('clothing')">
+          <div class="category-emoji">👗</div>
+          <div class="category-name">Clothing</div>
+        </div>
+        <div class="category-card" onclick="openCategory('pharmacy')">
+          <div class="category-emoji">💊</div>
+          <div class="category-name">Pharmacy</div>
+        </div>
+        <div class="category-card" onclick="openCategory('electronics')">
+          <div class="category-emoji">📱</div>
+          <div class="category-name">Electronics</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CATEGORY PANEL ============ -->
+<div class="panel" id="panel-category">
+  <div class="panel-header">
+    <button class="panel-back" onclick="hidePanel('panel-category')">‹</button>
+    <span class="panel-title" id="category-panel-title">Category</span>
+  </div>
+  <div class="panel-content">
+    <div class="items-grid" id="category-items-grid"></div>
+  </div>
+</div>
+
+<!-- ============ ITEM STORES PANEL ============ -->
+<div class="panel" id="panel-item-stores">
+  <div class="panel-header">
+    <button class="panel-back" onclick="hidePanel('panel-item-stores')">‹</button>
+    <span class="panel-title" id="item-stores-title">Available at Stores</span>
+  </div>
+  <div class="panel-content">
+    <p style="font-size:13px;color:var(--text-light);margin-bottom:16px;">Comparing prices across local stores near you 📍</p>
+    <div class="store-compare-list" id="store-compare-list"></div>
+  </div>
+</div>
+
+<!-- ============ CART PANEL ============ -->
+<div class="panel" id="panel-cart">
+  <div class="panel-header">
+    <button class="panel-back" onclick="hidePanel('panel-cart')">‹</button>
+    <span class="panel-title">My Cart 🛒</span>
+  </div>
+  <div class="panel-content">
+    <div id="cart-empty" class="cart-empty hidden">
+      <div class="empty-icon">🛒</div>
+      <p>Your cart is empty.<br>Start adding items!</p>
+    </div>
+    <div id="cart-items-list" class="cart-list"></div>
+    <div id="cart-total-bar" class="cart-total-bar hidden">
+      <div>
+        <div class="cart-total-label">Total Amount</div>
+        <div class="cart-total-value" id="cart-total-value">₹0</div>
+      </div>
+      <button class="btn btn-primary" onclick="openOrderPanel('cart')">Order Now →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ORDER PANEL ============ -->
+<div class="panel" id="panel-order">
+  <div class="panel-header">
+    <button class="panel-back" onclick="hidePanel('panel-order')">‹</button>
+    <span class="panel-title">Confirm Order</span>
+  </div>
+  <div class="panel-content" id="order-panel-content">
+    <div id="order-main">
+      <p style="font-size:15px;font-weight:600;color:var(--text-dark);margin-bottom:16px;">Choose delivery address</p>
+      <div class="delivery-options">
+        <div class="delivery-option" id="opt-home" onclick="selectDelivery('home')">
+          <div class="delivery-option-icon">🏠</div>
+          <div class="delivery-option-info">
+            <h4>Home Address</h4>
+            <p id="home-address-display">Loading your address...</p>
+          </div>
+          <div class="delivery-radio"></div>
+        </div>
+        <div class="delivery-option" id="opt-location" onclick="selectDelivery('location')">
+          <div class="delivery-option-icon">📍</div>
+          <div class="delivery-option-info">
+            <h4>Use Current Location</h4>
+            <p id="current-loc-display">Tap to detect your location</p>
+          </div>
+          <div class="delivery-radio"></div>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-block btn-lg" id="place-order-btn" onclick="placeOrder()" disabled style="opacity:0.5;">Place Order</button>
+    </div>
+    <div id="order-success" class="success-screen hidden">
+      <div class="success-icon">✅</div>
+      <div class="success-title">Order Placed!</div>
+      <p class="success-msg">Your order has been placed successfully. The store will prepare your items shortly. 🎉</p>
+      <button class="btn btn-primary" style="margin-top:24px;" onclick="goHomeAfterOrder()">Back to Home</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ REORDER PANEL ============ -->
+<div class="panel" id="panel-reorder">
+  <div class="panel-header">
+    <button class="panel-back" onclick="hidePanel('panel-reorder')">‹</button>
+    <span class="panel-title">Order Again 🔄</span>
+  </div>
+  <div class="panel-content">
+    <div class="reorder-list" id="reorder-list"></div>
+    <div id="reorder-empty" class="cart-empty hidden">
+      <div class="empty-icon">📦</div>
+      <p>No previous orders yet.<br>Start shopping!</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ACCOUNT PANEL ============ -->
+<div class="panel" id="panel-account">
+  <div class="panel-header">
+    <button class="panel-back" onclick="hidePanel('panel-account')">‹</button>
+    <span class="panel-title">My Account</span>
+  </div>
+  <div>
+    <div class="account-header">
+      <div class="account-avatar">👤</div>
+      <div class="account-user-name" id="account-display-name">John Doe</div>
+      <div class="account-user-email" id="account-display-email">john@email.com</div>
+    </div>
+    <div class="account-form" id="account-form">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input type="text" class="form-input" id="acc-name" disabled>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone Number</label>
+        <input type="tel" class="form-input" id="acc-phone" disabled>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" id="acc-email" disabled>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Home Address</label>
+        <input type="text" class="form-input" id="acc-address" disabled>
+      </div>
+    </div>
+    <div class="account-actions">
+      <button class="btn btn-outline" id="acc-edit-btn" onclick="toggleAccountEdit()" style="flex:1;">✏️ Edit</button>
+      <button class="btn btn-primary hidden" id="acc-save-btn" onclick="saveAccount()" style="flex:1;">💾 Save</button>
+    </div>
+    <div class="logout-section">
+      <button class="btn btn-danger btn-block" onclick="logoutCustomer()">🚪 Logout</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ BOTTOM NAV ============ -->
+<nav class="bottom-nav" id="customer-bottom-nav">
+  <button class="nav-item active" id="nav-home" onclick="switchCustomerNav('home')">
+    <span class="nav-icon">🏠</span>
+    <span>Home</span>
+  </button>
+  <button class="nav-item" id="nav-cart" onclick="switchCustomerNav('cart')">
+    <span class="nav-icon">🛒</span>
+    <span>Cart</span>
+  </button>
+  <button class="nav-item" id="nav-reorder" onclick="switchCustomerNav('reorder')">
+    <span class="nav-icon">🔄</span>
+    <span>Reorder</span>
+  </button>
+  <button class="nav-item" id="nav-account" onclick="switchCustomerNav('account')">
+    <span class="nav-icon">👤</span>
+    <span>Account</span>
+  </button>
+</nav>
+
+<!-- Toast Container -->
+<div id="toast-container"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
