@@ -574,10 +574,24 @@ function renderReorder() {
 function reorderItem(idx) {
   const item = State.orders[idx];
   if (!item) return;
-  // Put item in cart temporarily and open order panel
   State.cart = [item];
   sessionStorage.setItem('dealradar_cart', JSON.stringify(State.cart));
-  openOrderPanel('reorder');
+  // Reset order panel state
+  const orderMain = document.getElementById('order-main');
+  const orderSuccess = document.getElementById('order-success');
+  if (orderMain) orderMain.classList.remove('hidden');
+  if (orderSuccess) orderSuccess.classList.add('hidden');
+  // Reset delivery selection
+  document.getElementById('opt-home')?.classList.remove('selected');
+  document.getElementById('opt-location')?.classList.remove('selected');
+  const btn = document.getElementById('place-order-btn');
+  if (btn) { btn.disabled = true; btn.style.opacity = '0.5'; }
+  // Set home address
+  if (State.currentUser) {
+    const el = document.getElementById('home-address-display');
+    if (el) el.textContent = State.currentUser.address || 'Your home address';
+  }
+  showPanel('panel-order');
 }
 
 // Account
