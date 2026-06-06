@@ -432,7 +432,7 @@ function buildItemCard(item) {
   return `
     <div class="item-card" onclick="openItemStores('${item.id}', '${item.name}', '${item.image}')">
       <div class="item-card-img">
-      <img src="${item.image}" width="60">
+      <img src="${item.image}" width="100" height="100">
       </div>
       <div class="item-card-body">
         <div class="item-card-name">${item.name}</div>
