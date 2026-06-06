@@ -423,7 +423,7 @@ function handleSearch(q) {
 function openCategory(cat) {
   const data = CATEGORIES[cat];
   if (!data) return;
-  document.getElementById('category-panel-title').innerHTML = `<img src=${data.image}" width="30"> ${data.name}`;
+  document.getElementById('category-panel-title').innerHTML = `<img src="${data.image}" width="30"> ${data.name}`;
   document.getElementById('category-items-grid').innerHTML = data.items.map(item => buildItemCard(item)).join('');
   showPanel('panel-category');
 }
@@ -432,7 +432,8 @@ function buildItemCard(item) {
   return `
     <div class="item-card" onclick="openItemStores('${item.id}', '${item.name}', '${item.image}')">
       <div class="item-card-img">
-      <img src="${item.image}" width="100" height="100">
+      <img src="${item.image}" 
+      class="item-image">
       </div>
       <div class="item-card-body">
         <div class="item-card-name">${item.name}</div>
