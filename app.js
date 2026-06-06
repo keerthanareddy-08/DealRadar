@@ -22,61 +22,61 @@ const State = {
 // ============================================
 const CATEGORIES = {
   grocery: {
-    name: 'Grocery', emoji: '🛒',
+    name: 'Grocery', image: 'https://cdn.prod.website-files.com/637f7c161a14232e2ea8473d/68273472635fcbdfa369f2e3_Untitled%20design%20(5)-compressed.jpg',
     items: [
-      { id: 'g1', name: 'Basmati Rice 1kg', emoji: '🍚' },
-      { id: 'g2', name: 'Toor Dal 500g', emoji: '🫘' },
-      { id: 'g3', name: 'Sunflower Oil 1L', emoji: '🛢️' },
-      { id: 'g4', name: 'Amul Butter 100g', emoji: '🧈' },
-      { id: 'g5', name: 'Bread Loaf', emoji: '🍞' },
-      { id: 'g6', name: 'Eggs (12 pack)', emoji: '🥚' },  
+      { id: 'g1', name: 'Basmati Rice 1kg', image: 'https://www.hamiast.com/cdn/shop/files/Authentic_Jammu_R.S._Pura_Basmati_Rice_Aromatic_Bliss_-_Hamiast-51786.jpg?v=1740486658' },
+      { id: 'g2', name: 'Toor Dal 500g', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7tYTLWe8dEQrQmixqgojLUtd_oVjOlxycbw&s' },
+      { id: 'g3', name: 'Sunflower Oil 1L', image: 'https://driftbasket.com/wp-content/uploads/2021/06/FORTUNE-SUNFLOWER-500x500-1.jpeg' },
+      { id: 'g4', name: 'Amul Butter 100g', image: 'https://5.imimg.com/data5/SELLER/Default/2022/3/FB/PJ/AE/1442638/104864-2-2-amul-butter-pasteurised.jpg' },
+      { id: 'g5', name: 'Bread Loaf', image: 'https://thesaltedpepper.com/wp-content/uploads/2024/07/Butter-Bread-sq.jpg' },
+      { id: 'g6', name: 'Eggs (12 pack)', image: 'https://m.media-amazon.com/images/I/31BzUC+5LJL._AC_UF894,1000_QL80_.jpg' },  
     ]
   },
   food: {
-    name: 'Food', emoji: '🍔',
+    name: 'Food', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYd_Dklw7PMUKDzpgHTGdy4P1BBWdPT9NfVQ&s',
     items: [
-      { id: 'f1', name: 'Veg Biryani', emoji: '🍛' },
-      { id: 'f2', name: 'Paneer Butter Masala', emoji: '🥘' },
-      { id: 'f3', name: 'Masala Dosa', emoji: '🥞' },
-      { id: 'f4', name: 'Chicken Burger', emoji: '🍔' },
-      { id: 'f5', name: 'Fresh Juice 250ml', emoji: '🧃' },
-      { id: 'f6', name: 'Samosa (4 pcs)', emoji: '🫓' },
+      { id: 'f1', name: 'Veg Biryani', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtDiMiok2ektyhL9ZFNhPX3psPNJKIaVY3Ng&s' },
+      { id: 'f2', name: 'Paneer Butter Masala', image: 'https://www.vegrecipesofindia.com/wp-content/uploads/2020/01/paneer-butter-masala-5.jpg' },
+      { id: 'f3', name: 'Masala Dosa', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv4F_s0QF9Q_xnKUxOdINmO_jVTnCiPB8QCA&s' },
+      { id: 'f4', name: 'Chicken Burger', image: 'https://i0.wp.com/flaevor.com/wp-content/uploads/2022/04/SambalFriedChickenBurger1.jpg?resize=1024%2C830&ssl=1' },
+      { id: 'f5', name: 'Fresh Juice 250ml', image: 'https://c8.alamy.com/comp/EJ64BX/fresh-juice-mix-fruit-healthy-drinks-on-wooden-table-EJ64BX.jpg' },
+      { id: 'f6', name: 'Samosa (4 pcs)', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJFPP0wyCOQefudUz7vjo9QtLIXPz9BWoY_g&s' },
     ]
   },
   toys: {
-    name: 'Toys', emoji: '🧸',
+    name: 'Toys', image: 'https://img.magnific.com/premium-photo/toys-collection-isolated-background_488220-363.jpg?semt=ais_hybrid&w=740&q=80',
     items: [
-      { id: 't1', name: 'Lego Classic Set', emoji: '🧱' },
-      { id: 't2', name: 'Teddy Bear', emoji: '🧸' },
-      { id: 't3', name: 'Remote Car', emoji: '🚗' },
-      { id: 't4', name: 'Board Game', emoji: '🎲' },
+      { id: 't1', name: 'Lego Classic Set', image: 'https://rukminim2.flixcart.com/image/480/640/xif0q/block-construction/0/6/t/classic-creative-happy-box-colorful-building-bricks-toy-11042-original-imah769z9evhyy29.jpeg?q=90' },
+      { id: 't2', name: 'Teddy Bear', image: 'https://teddydaddy.in/wp-content/uploads/Love-Teddy-Bear-Soft-Toy-Plush-Teddy-Daddy-68-scaled.jpg' },
+      { id: 't3', name: 'Remote Car', image: 'https://samstoy.in/cdn/shop/files/remote-control-toy-car-4wd-black-model-view.jpg?v=1772346339' },
+      { id: 't4', name: 'Board Game', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTQJushgnk1M1RXfFes0fhyHnwtnQVp2nWkQ&s' },
     ]
   },
   clothing: {
-    name: 'Clothing', emoji: '👗',
+    name: 'Clothing', image: 'https://img.freepik.com/free-photo/interior-clothing-store-with-stylish-merchandise-racks-fashionable-brand-design-casual-wear-modern-boutique-empty-fashion-showroom-shopping-centre-with-elegant-merchandise_482257-65537.jpg?semt=ais_hybrid&w=740&q=80',
     items: [
-      { id: 'cl1', name: 'Cotton Kurta', emoji: '👘' },
-      { id: 'cl2', name: 'Denim Jeans', emoji: '👖' },
-      { id: 'cl3', name: 'Sneakers', emoji: '👟' },
-      { id: 'cl4', name: 'Sweatshirts', emoji: '👗' },      
+      { id: 'cl1', name: 'Cotton Kurta', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDe2_slp_otIk-9l89TgmpjMDe29EWosVr2g&s' },
+      { id: 'cl2', name: 'Denim Jeans', image: 'https://www.ruff.in/cdn/shop/files/14749_RE_DENIM-X_1_c1032904-b8fe-4e5f-bd7f-4068127323e9.jpg?v=1739353079' },
+      { id: 'cl3', name: 'Sneakers', image: 'https://www.campusshoes.com/cdn/shop/files/LEVEL_LEVEL_WHT-L.GRY_07_831c7a2c-ff1b-4011-9268-b11f984219c6.webp?v=1757580207' },
+      { id: 'cl4', name: 'Sweatshirts', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJXOpE-noxprbOoU0T_Nzh3GdQbrYqJMrJew&s' },      
     ]
   },
   pharmacy: {
-    name: 'Pharmacy', emoji: '💊',
+    name: 'Pharmacy', image: 'https://thumbs.dreamstime.com/b/pharmacy-otc-products-turkey-64209774.jpg',
     items: [
-      { id: 'p1', name: 'Paracetamol 500mg', emoji: '💊' },
-      { id: 'p2', name: 'Vitamin C Tablets', emoji: '🍊' },
-      { id: 'p3', name: 'Hand Sanitizer 200ml', emoji: '🧴' },
-      { id: 'p4', name: 'Band-Aid Pack', emoji: '🩹' },   
+      { id: 'p1', name: 'Paracetamol 500mg', image: 'https://www.doctrislifesciences.com/wp-content/uploads/2024/01/DSC00181.png' },
+      { id: 'p2', name: 'Vitamin C Tablets', image: 'https://www.bbassets.com/media/uploads/p/l/40323622_1-limcee-vitamin-c-chewable-tablet-500-mg-orange-flavour.jpg' },
+      { id: 'p3', name: 'Hand Sanitizer 200ml', image: 'https://5.imimg.com/data5/SELLER/Default/2024/4/408904713/QT/ZI/YJ/148088081/sanifast-hand-sanitizer-liquid-hand-rub-500ml-with-mist-spray.jpg' },
+      { id: 'p4', name: 'Band-Aid Pack', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWetPwOiqwRYhNFagZlwzEP2NnH57-rlu8RA&s' },   
     ]
   },
   electronics: {
-    name: 'Electronics', emoji: '📱',
+    name: 'Electronics', image: 'https://thumbs.dreamstime.com/b/saint-petersburg-russia-circa-may-goods-display-sony-store-galeria-shopping-center-electronics-store-134641471.jpg',
     items: [
-      { id: 'e1', name: 'USB-C Cable 1m', emoji: '🔌' },
-      { id: 'e2', name: 'Wireless Earbuds', emoji: '🎧' },
-      { id: 'e3', name: 'Power Bank 10000mAh', emoji: '🔋' },
-      { id: 'e4', name: 'Phone Case', emoji: '📱' },
+      { id: 'e1', name: 'USB-C Cable 1m', image: 'https://gadgetsstore.co.in/wp-content/uploads/2022/06/1.jpeg' },
+      { id: 'e2', name: 'Wireless Earbuds', image: 'https://www.boat-lifestyle.com/cdn/shop/files/ACCG6DS7WDJHGWSH_0.png?v=1727669669' },
+      { id: 'e3', name: 'Power Bank 10000mAh', image: 'https://images.philips.com/is/image/philipsconsumer/506144bc684c46e3a62fb0ce00a6d411?wid=700&hei=700&$pnglarge$ ' },
+      { id: 'e4', name: 'Phone Case', image: 'https://www.unpostedletters.in/cdn/shop/files/7_40acf1f5-a0ba-4d51-b26a-a2b1e06624cb_768x.jpg?v=1712558944' },
     ]
   }
 };
@@ -106,18 +106,18 @@ function generateStoreOffers(itemName) {
 
 // Store owner sample products
 let soProducts = [
-  { id: 'sp1', name: 'Basmati Rice 1kg', price: 120, stock: 45, img: '', emoji: '🍚' },
-  { id: 'sp2', name: 'Toor Dal 500g', price: 75, stock: 8, img: '', emoji: '🫘' },
-  { id: 'sp3', name: 'Sunflower Oil 1L', price: 160, stock: 0, img: '', emoji: '🛢️' },   
+  { id: 'sp1', name: 'Basmati Rice 1kg', price: 120, stock: 45, image: 'https://www.hamiast.com/cdn/shop/files/Authentic_Jammu_R.S._Pura_Basmati_Rice_Aromatic_Bliss_-_Hamiast-51786.jpg?v=1740486658' },
+  { id: 'sp2', name: 'Toor Dal 500g', price: 75, stock: 8, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7tYTLWe8dEQrQmixqgojLUtd_oVjOlxycbw&s' },
+  { id: 'sp3', name: 'Sunflower Oil 1L', price: 160, stock: 0, image: 'https://driftbasket.com/wp-content/uploads/2021/06/FORTUNE-SUNFLOWER-500x500-1.jpeg ' },   
 ];
 
 // Store owner sample orders
 const soOrders = [
-  { id: 'o1', item: 'Basmati Rice 1kg', emoji: '🍚', customer: 'Rahul Sharma', time: '09:14 AM', price: 120, status: 'delivered', date: new Date() },
-  { id: 'o2', item: 'Toor Dal 500g', emoji: '🫘', customer: 'Priya Nair', time: '10:30 AM', price: 75, status: 'processing', date: new Date() },
-  { id: 'o3', item: 'Amul Butter 100g', emoji: '🧈', customer: 'Arjun Deshmukh', time: '11:05 AM', price: 55, status: 'pending', date: new Date() },
-  { id: 'o4', item: 'Sunflower Oil 1L', emoji: '🛢️', customer: 'Shriya', time: '08:50 AM', price: 160, status: 'delivered', date: new Date(Date.now() - 864e5 * 2) },
-  { id: 'o5', item: 'Bread Loaf', emoji: '🍞', customer: 'Meghana', time: '02:10 PM', price: 40, status: 'pending', date: new Date(Date.now() - 864e5 * 5) },
+  { id: 'o1', item: 'Basmati Rice 1kg', image: 'https://www.hamiast.com/cdn/shop/files/Authentic_Jammu_R.S._Pura_Basmati_Rice_Aromatic_Bliss_-_Hamiast-51786.jpg?v=1740486658', customer: 'Rahul Sharma', time: '09:14 AM', price: 120, status: 'delivered', date: new Date() },
+  { id: 'o2', item: 'Toor Dal 500g', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7tYTLWe8dEQrQmixqgojLUtd_oVjOlxycbw&s', customer: 'Priya Nair', time: '10:30 AM', price: 75, status: 'processing', date: new Date() },
+  { id: 'o3', item: 'Amul Butter 100g', image: 'https://5.imimg.com/data5/SELLER/Default/2022/3/FB/PJ/AE/1442638/104864-2-2-amul-butter-pasteurised.jpg', customer: 'Arjun Deshmukh', time: '11:05 AM', price: 55, status: 'pending', date: new Date() },
+  { id: 'o4', item: 'Sunflower Oil 1L', image: 'https://driftbasket.com/wp-content/uploads/2021/06/FORTUNE-SUNFLOWER-500x500-1.jpeg', customer: 'Shriya', time: '08:50 AM', price: 160, status: 'delivered', date: new Date(Date.now() - 864e5 * 2) },
+  { id: 'o5', item: 'Bread Loaf', image: 'https://thesaltedpepper.com/wp-content/uploads/2024/07/Butter-Bread-sq.jpg', customer: 'Meghana', time: '02:10 PM', price: 40, status: 'pending', date: new Date(Date.now() - 864e5 * 5) },
 ];
 
 // ============================================
@@ -409,7 +409,7 @@ function handleSearch(q) {
   const results = [];
   Object.values(CATEGORIES).forEach(cat => {
     cat.items.forEach(item => {
-      if (item.name.toLowerCase().includes(q.toLowerCase())) results.push({ ...item, catEmoji: cat.emoji });
+      if (item.name.toLowerCase().includes(q.toLowerCase())) results.push({ ...item, catimage: cat.image });
     });
   });
   if (results.length === 0) {
@@ -423,15 +423,17 @@ function handleSearch(q) {
 function openCategory(cat) {
   const data = CATEGORIES[cat];
   if (!data) return;
-  document.getElementById('category-panel-title').textContent = `${data.emoji} ${data.name}`;
+  document.getElementById('category-panel-title').innerHTML = `<img src=${data.image}" width="30"> ${data.name}`;
   document.getElementById('category-items-grid').innerHTML = data.items.map(item => buildItemCard(item)).join('');
   showPanel('panel-category');
 }
 
 function buildItemCard(item) {
   return `
-    <div class="item-card" onclick="openItemStores('${item.id}', '${item.name}', '${item.emoji}')">
-      <div class="item-card-img">${item.emoji}</div>
+    <div class="item-card" onclick="openItemStores('${item.id}', '${item.name}', '${item.image}')">
+      <div class="item-card-img">
+      <img src="${item.image}" width="60">
+      </div>
       <div class="item-card-body">
         <div class="item-card-name">${item.name}</div>
       </div>
@@ -439,13 +441,15 @@ function buildItemCard(item) {
 }
 
 // Item Store Comparison
-function openItemStores(id, name, emoji) {
+function openItemStores(id, name, image) {
   document.getElementById('item-stores-title').textContent = name;
   const stores = generateStoreOffers(name);
   const list = document.getElementById('store-compare-list');
   list.innerHTML = stores.map((s, i) => `
     <div class="store-compare-card">
-      <div class="store-compare-img">${emoji}</div>
+      <div class="store-compare-img">
+      <img src="${image}" width="60">
+      </div>
       <div class="store-compare-info">
         <div class="store-compare-name">${s.name}</div>
         <div class="store-compare-price-row">
@@ -457,14 +461,14 @@ function openItemStores(id, name, emoji) {
           <span>🕐 ${s.delivery}</span>
           <span>⭐ ${s.rating}</span>
         </div>
-        <button class="add-to-cart-btn" id="atc-${i}-${id}" onclick="addToCart('${id}','${name}','${emoji}','${s.name}',${s.price},${i})">+ Add to Cart</button>
+        <button class="add-to-cart-btn" id="atc-${i}-${id}" onclick="addToCart('${id}','${name}','${image}','${s.name}',${s.price},${i})">+ Add to Cart</button>
       </div>
     </div>`).join('');
   showPanel('panel-item-stores');
 }
 
-function addToCart(itemId, name, emoji, storeName, price, btnIdx) {
-  State.cart.push({ itemId, name, emoji, storeName, price });
+function addToCart(itemId, name, image, storeName, price, btnIdx) {
+  State.cart.push({ itemId, name, image, storeName, price });
   sessionStorage.setItem('dealradar_cart', JSON.stringify(State.cart));
   showToast(`${name} added to cart! 🛒`, 'success');
   const btn = document.getElementById(`atc-${btnIdx}-${itemId}`);
@@ -490,7 +494,9 @@ function renderCart() {
   document.getElementById('cart-total-value').textContent = `₹${total}`;
   list.innerHTML = State.cart.map((item, idx) => `
     <div class="cart-item-card">
-      <div class="cart-item-img">${item.emoji}</div>
+      <div class="cart-item-img">
+      <img src="${item.image}" width="50">
+      </div>
       <div class="cart-item-info">
         <div class="cart-item-name">${item.name}</div>
         <div class="cart-item-store">🏪 ${item.storeName}</div>
@@ -562,7 +568,9 @@ function renderReorder() {
   empty.classList.add('hidden');
   list.innerHTML = State.orders.map((item, i) => `
     <div class="reorder-card">
-      <div class="reorder-img">${item.emoji}</div>
+      <div class="reorder-img">
+      <img src="${item.image}" width="50">
+      </div>
       <div class="reorder-info">
         <div class="reorder-name">${item.name}</div>
         <div class="reorder-store">🏪 ${item.storeName}</div>
@@ -689,7 +697,7 @@ function renderProducts() {
     const stockLabel = p.stock > 10 ? '🟢 In Stock' : p.stock > 0 ? '🟡 Low Stock' : '🔴 Out of Stock';
     return `
       <div class="product-card">
-        <div class="product-card-img">${p.img ? `<img src="${p.img}" alt="${p.name}">` : p.emoji}</div>
+        <div class="product-card-img"><img src="${p.img}" alt="${p.name}"></div>
         <div class="product-card-body">
           <div class="product-card-name">${p.name}</div>
           <div class="product-card-price">₹${p.price}</div>
@@ -710,11 +718,11 @@ function addProduct() {
   const img = document.getElementById('new-prod-img')?.value.trim();
   const cat = document.getElementById('new-prod-cat')?.value;
   if (!name || !price || !cat) { showToast('Please fill all required fields', 'error'); return; }
-  const catEmojis = { grocery:'🛒', food:'🍔', toys:'🧸', clothing:'👗', pharmacy:'💊', electronics:'📱' };
+  const catImages = { grocery:'https://cdn.prod.website-files.com/637f7c161a14232e2ea8473d/68273472635fcbdfa369f2e3_Untitled%20design%20(5)-compressed.jpg', food:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYd_Dklw7PMUKDzpgHTGdy4P1BBWdPT9NfVQ&s', toys:'https://img.magnific.com/premium-photo/toys-collection-isolated-background_488220-363.jpg?semt=ais_hybrid&w=740&q=80', clothing:'https://img.freepik.com/free-photo/interior-clothing-store-with-stylish-merchandise-racks-fashionable-brand-design-casual-wear-modern-boutique-empty-fashion-showroom-shopping-centre-with-elegant-merchandise_482257-65537.jpg?semt=ais_hybrid&w=740&q=80', pharmacy:'https://thumbs.dreamstime.com/b/pharmacy-otc-products-turkey-64209774.jpg', electronics:'https://thumbs.dreamstime.com/b/saint-petersburg-russia-circa-may-goods-display-sony-store-galeria-shopping-center-electronics-store-134641471.jpg' };
   const newProd = {
     id: 'sp' + Date.now(),
-    name, price, stock, img,
-    emoji: catEmojis[cat] || '📦',
+    name, price, stock,
+    image: img || catImages[cat]
   };
   soProducts.push(newProd);
   renderProducts();
@@ -854,10 +862,10 @@ function renderMostOrdered() {
   const list = document.getElementById('most-ordered-list');
   if (!list) return;
   const mostOrdered = [
-    { name: 'Basmati Rice 1kg', emoji: '🍚', price: 120, orders: 48 },
-    { name: 'Amul Butter 100g', emoji: '🧈', price: 55, orders: 34 },
-    { name: 'Toor Dal 500g', emoji: '🫘', price: 75, orders: 27 },
-    { name: 'Sunflower Oil 1L', emoji: '🛢️', price: 160, orders: 19 },
+    { name: 'Basmati Rice 1kg', image: 'https://www.hamiast.com/cdn/shop/files/Authentic_Jammu_R.S._Pura_Basmati_Rice_Aromatic_Bliss_-_Hamiast-51786.jpg?v=1740486658', price: 120, orders: 48 },
+    { name: 'Amul Butter 100g', image: 'https://5.imimg.com/data5/SELLER/Default/2022/3/FB/PJ/AE/1442638/104864-2-2-amul-butter-pasteurised.jpg', price: 55, orders: 34 },
+    { name: 'Toor Dal 500g', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7tYTLWe8dEQrQmixqgojLUtd_oVjOlxycbw&s', price: 75, orders: 27 },
+    { name: 'Sunflower Oil 1L', image: 'https://driftbasket.com/wp-content/uploads/2021/06/FORTUNE-SUNFLOWER-500x500-1.jpeg', price: 160, orders: 19 },
   ];
   list.innerHTML = mostOrdered.map((item, i) => `
     <div class="most-ordered-card">
