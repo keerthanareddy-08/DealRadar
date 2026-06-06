@@ -669,7 +669,13 @@ h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
   width: 100%;
   height: 180px;
   overflow: hidden;
-   background: #fff;
+  background: #fff;
+}
+.item-image {
+   width: 100%;
+   height: 100%;
+   onject-fit: cover;
+   display: block;
 }
 .item-card-img img {
    width: 100%;
