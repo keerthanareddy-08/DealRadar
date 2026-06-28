@@ -204,65 +204,94 @@ function switchAuthTab(portal, tab, btn) {
 
 // Customer Login
 function customerLogin() {
+
   const u = document.getElementById('c-username')?.value.trim();
   const p = document.getElementById('c-password')?.value.trim();
 
   if (!u || !p) {
-    showToast('Please enter username and password', 'error');
+    showToast('Please enter username/email and password', 'error');
     return;
   }
 
-  // Get registered customers
-  const customers = JSON.parse(sessionStorage.getItem('customers')) || [];
+  const customers = JSON.parse(sessionStorage.getItem('dealradar_customers')) || [];
 
-  // Find customer by username
-  const user = customers.find(c => c.username === u);
+  const user = customers.find(c =>
+      c.email.toLowerCase() === u.toLowerCase() ||
+      c.username.toLowerCase() === u.toLowerCase()
+  );
 
   if (!user) {
     showToast('User not registered. Please register first.', 'error');
 
-    // Switch to Register tab
-    switchCustomerTab('register');   // Use your actual function name if different
-
-    // Prefill username (optional)
-    document.getElementById('r-username').value = u;
+    // Optional: switch to register tab if you have such a function
+    // switchCustomerTab('register');
 
     return;
   }
 
-  // Check password
   if (user.password !== p) {
     showToast('Incorrect password.', 'error');
     return;
   }
 
-  // Login success
   State.currentUser = user;
+
   sessionStorage.setItem('dealradar_user', JSON.stringify(user));
+
   window.location.href = 'customer.html';
 }
 
-
 // Customer Register
 function customerRegister() {
+
   const name = document.getElementById('c-reg-name')?.value.trim();
   const email = document.getElementById('c-reg-email')?.value.trim();
   const phone = document.getElementById('c-reg-phone')?.value.trim();
   const password = document.getElementById('c-reg-password')?.value.trim();
   const address = document.getElementById('c-reg-address')?.value.trim();
+
   if (!name || !email || !phone || !password || !address) {
-    showToast('Please fill all fields', 'error'); return;
+    showToast('Please fill all fields', 'error');
+    return;
   }
-  State.currentUser = { name, email, phone, address, username: name.split(' ')[0].toLowerCase() };
-  sessionStorage.setItem('dealradar_user', JSON.stringify(State.currentUser));
-  showToast('Account created! Logging in...', 'success');
-  setTimeout(() => { window.location.href = 'customer.html'; }, 1000);
+
+  let customers = JSON.parse(sessionStorage.getItem('dealradar_customers')) || [];
+
+  // Prevent duplicate registration
+  if (customers.some(c => c.email.toLowerCase() === email.toLowerCase())) {
+    showToast('Email already registered. Please login.', 'error');
+    return;
+  }
+
+  const user = {
+    name,
+    email,
+    phone,
+    password,
+    address,
+    username: name.split(' ')[0].toLowerCase()
+  };
+
+  customers.push(user);
+
+  sessionStorage.setItem('dealradar_customers', JSON.stringify(customers));
+
+  State.currentUser = user;
+
+  sessionStorage.setItem('dealradar_user', JSON.stringify(user));
+
+  showToast('Account created successfully!', 'success');
+
+  setTimeout(() => {
+    window.location.href = 'customer.html';
+  }, 1000);
 }
 
 // Store Login
 function storeLogin() {
-  const sid = document.getElementById('s-storeid').value.trim();
-  const p = document.getElementById('s-password').value.trim();
+
+  const sid = document.getElementById('s-storeid')?.value.trim();
+  const p = document.getElementById('s-password')?.value.trim();
 
   if (!sid || !p) {
       showToast('Please enter Store ID and password', 'error');
@@ -279,11 +308,12 @@ function storeLogin() {
   }
 
   if (store.password !== p) {
-      showToast('Incorrect password.', 'error');
+      showToast('Incorrect password', 'error');
       return;
   }
 
   State.currentStore = store;
+
   sessionStorage.setItem('dealradar_store', JSON.stringify(store));
 
   window.location.href = 'store-owner.html';
@@ -298,30 +328,44 @@ function storeRegisterRequest() {
   const email = document.getElementById('s-reg-email')?.value.trim();
   const address = document.getElementById('s-reg-address')?.value.trim();
   const password = document.getElementById('s-reg-password')?.value.trim();
+
   if (!name || !storeName || !category || !phone || !email || !address || !password) {
-    showToast('Please fill all fields', 'error'); return;
+    showToast('Please fill all fields', 'error');
+    return;
   }
-  // Save pending store data
-  const pendingStore = { name, storeName, category, phone, email, address, password };
+
+  const pendingStore = {
+    name,
+    storeName,
+    category,
+    phone,
+    email,
+    address,
+    password
+  };
+
   sessionStorage.setItem('dealradar_pending_store', JSON.stringify(pendingStore));
+
   showModal('modal-request-submitted');
 }
 
 function simulateApproval() {
+
   hideModal('modal-request-submitted');
 
   const sid = 'STR-' + Math.floor(10000 + Math.random() * 90000);
+
   document.getElementById('generated-store-id').textContent = sid;
 
-  // Get pending store
   const pending = JSON.parse(sessionStorage.getItem('dealradar_pending_store')) || {};
 
   pending.storeId = sid;
 
-  // Get existing registered stores
+  sessionStorage.setItem('dealradar_pending_store', JSON.stringify(pending));
+
+  // Save as registered store
   const stores = JSON.parse(sessionStorage.getItem('dealradar_stores')) || [];
 
-  // Save new registered store
   stores.push({
       storeId: sid,
       storeName: pending.storeName,
@@ -339,6 +383,7 @@ function simulateApproval() {
       showModal('modal-approved');
   }, 400);
 }
+
 function goToStoreLogin() {
   hideModal('modal-approved');
   const pending = JSON.parse(sessionStorage.getItem('dealradar_pending_store') || '{}');
