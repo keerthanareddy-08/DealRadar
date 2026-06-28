@@ -213,7 +213,7 @@ function customerLogin() {
     return;
   }
 
-  const customers = JSON.parse(sessionStorage.getItem('dealradar_customers')) || [];
+  const customers = JSON.parse(localStorage.getItem('dealradar_customers')) || [];
 
   const user = customers.find(
     c => c.email.toLowerCase() === email.toLowerCase()
@@ -235,7 +235,7 @@ function customerLogin() {
 
   State.currentUser = user;
 
-  sessionStorage.setItem('dealradar_user', JSON.stringify(user));
+  localStorage.setItem('dealradar_user', JSON.stringify(user));
 
   window.location.href = 'customer.html';
 }
@@ -254,7 +254,7 @@ function customerRegister() {
     return;
   }
 
-  let customers = JSON.parse(sessionStorage.getItem('dealradar_customers')) || [];
+  let customers = JSON.parse(localStorage.getItem('dealradar_customers')) || [];
 
   // Prevent duplicate registration
   if (customers.some(c => c.email.toLowerCase() === email.toLowerCase())) {
@@ -272,11 +272,11 @@ function customerRegister() {
 
   customers.push(user);
 
-  sessionStorage.setItem('dealradar_customers', JSON.stringify(customers));
+  localStorage.setItem('dealradar_customers', JSON.stringify(customers));
 
   State.currentUser = user;
 
-  sessionStorage.setItem('dealradar_user', JSON.stringify(user));
+  localStorage.setItem('dealradar_user', JSON.stringify(user));
 
   showToast('Account created successfully!', 'success');
 
@@ -296,7 +296,7 @@ function storeLogin() {
       return;
   }
 
-  const stores = JSON.parse(sessionStorage.getItem('dealradar_stores')) || [];
+  const stores = JSON.parse(localStorage.getItem('dealradar_stores')) || [];
 
   const store = stores.find(s => s.storeId === sid);
 
@@ -312,7 +312,7 @@ function storeLogin() {
 
   State.currentStore = store;
 
-  sessionStorage.setItem('dealradar_store', JSON.stringify(store));
+  localStorage.setItem('dealradar_store', JSON.stringify(store));
 
   window.location.href = 'store-owner.html';
 }
@@ -342,7 +342,7 @@ function storeRegisterRequest() {
     password
   };
 
-  sessionStorage.setItem('dealradar_pending_store', JSON.stringify(pendingStore));
+  localStorage.setItem('dealradar_pending_store', JSON.stringify(pendingStore));
 
   showModal('modal-request-submitted');
 }
@@ -355,14 +355,14 @@ function simulateApproval() {
 
   document.getElementById('generated-store-id').textContent = sid;
 
-  const pending = JSON.parse(sessionStorage.getItem('dealradar_pending_store')) || {};
+  const pending = JSON.parse(localStorage.getItem('dealradar_pending_store')) || {};
 
   pending.storeId = sid;
 
-  sessionStorage.setItem('dealradar_pending_store', JSON.stringify(pending));
+  localStorage.setItem('dealradar_pending_store', JSON.stringify(pending));
 
   // Save as registered store
-  const stores = JSON.parse(sessionStorage.getItem('dealradar_stores')) || [];
+  const stores = JSON.parse(localStorage.getItem('dealradar_stores')) || [];
 
   stores.push({
       storeId: sid,
@@ -375,7 +375,7 @@ function simulateApproval() {
       password: pending.password
   });
 
-  sessionStorage.setItem('dealradar_stores', JSON.stringify(stores));
+  localStorage.setItem('dealradar_stores', JSON.stringify(stores));
 
   setTimeout(() => {
       showModal('modal-approved');
@@ -384,14 +384,14 @@ function simulateApproval() {
 
 function goToStoreLogin() {
   hideModal('modal-approved');
-  const pending = JSON.parse(sessionStorage.getItem('dealradar_pending_store') || '{}');
+  const pending = JSON.parse(localStorage.getItem('dealradar_pending_store') || '{}');
   // Pre-fill store id in login
   const sidInput = document.getElementById('s-storeid');
   if (sidInput && pending.storeId) sidInput.value = pending.storeId;
   switchAuthTab('store', 'login', document.querySelectorAll('#auth-store .auth-tab')[0]);
 
   // Also store info for post-login use
-  sessionStorage.setItem('dealradar_store', JSON.stringify({
+  localStorage.setItem('dealradar_store', JSON.stringify({
     storeId: pending.storeId,
     storeName: pending.storeName,
     ownerName: pending.name,
@@ -454,11 +454,11 @@ function storeResetPassword() {
 // CUSTOMER PAGE
 // ============================================
 function initCustomer() {
-  const user = JSON.parse(sessionStorage.getItem('dealradar_user') || 'null');
+  const user = JSON.parse(localStorage.getItem('dealradar_user') || 'null');
   if (!user) { window.location.href = 'index.html'; return; }
   State.currentUser = user;
-  State.cart = JSON.parse(sessionStorage.getItem('dealradar_cart') || '[]');
-  State.orders = JSON.parse(sessionStorage.getItem('dealradar_orders') || '[]');
+  State.cart = JSON.parse(localStorage.getItem('dealradar_cart') || '[]');
+  State.orders = JSON.parse(localStorage.getItem('dealradar_orders') || '[]');
   loadAccountInfo();
 }
 
@@ -563,7 +563,7 @@ function openItemStores(id, name, emoji) {
 
 function addToCart(itemId, name, emoji, storeName, price, btnIdx) {
   State.cart.push({ itemId, name, emoji, storeName, price });
-  sessionStorage.setItem('dealradar_cart', JSON.stringify(State.cart));
+  localStorage.setItem('dealradar_cart', JSON.stringify(State.cart));
   showToast(`${name} added to cart! 🛒`, 'success');
   const btn = document.getElementById(`atc-${btnIdx}-${itemId}`);
   if (btn) { btn.classList.add('added'); btn.textContent = '✓ Added'; }
@@ -575,7 +575,7 @@ function renderCart() {
   const empty = document.getElementById('cart-empty');
   const totalBar = document.getElementById('cart-total-bar');
   if (!list) return;
-  State.cart = JSON.parse(sessionStorage.getItem('dealradar_cart') || '[]');
+  State.cart = JSON.parse(localStorage.getItem('dealradar_cart') || '[]');
   if (State.cart.length === 0) {
     list.innerHTML = '';
     empty.classList.remove('hidden');
@@ -634,8 +634,8 @@ function placeOrder() {
     State.orders.push({ ...item, orderedAt: new Date().toISOString() });
   });
   State.cart = [];
-  sessionStorage.setItem('dealradar_cart', '[]');
-  sessionStorage.setItem('dealradar_orders', JSON.stringify(State.orders));
+  localStorage.setItem('dealradar_cart', '[]');
+  localStorage.setItem('dealradar_orders', JSON.stringify(State.orders));
   document.getElementById('order-main').classList.add('hidden');
   document.getElementById('order-success').classList.remove('hidden');
 }
@@ -648,7 +648,7 @@ function goHomeAfterOrder() {
 
 // Reorder
 function renderReorder() {
-  State.orders = JSON.parse(sessionStorage.getItem('dealradar_orders') || '[]');
+  State.orders = JSON.parse(localStorage.getItem('dealradar_orders') || '[]');
   const list = document.getElementById('reorder-list');
   const empty = document.getElementById('reorder-empty');
   if (!list) return;
@@ -673,7 +673,7 @@ function reorderItem(idx) {
   const item = State.orders[idx];
   if (!item) return;
   State.cart = [item];
-  sessionStorage.setItem('dealradar_cart', JSON.stringify(State.cart));
+  localStorage.setItem('dealradar_cart', JSON.stringify(State.cart));
   // Reset order panel state
   const orderMain = document.getElementById('order-main');
   const orderSuccess = document.getElementById('order-success');
@@ -709,7 +709,7 @@ function saveAccount() {
   user.email = document.getElementById('acc-email')?.value || user.email;
   user.address = document.getElementById('acc-address')?.value || user.address;
   State.currentUser = user;
-  sessionStorage.setItem('dealradar_user', JSON.stringify(user));
+  localStorage.setItem('dealradar_user', JSON.stringify(user));
   const inputs = document.querySelectorAll('#account-form .form-input');
   inputs.forEach(i => { i.disabled = true; });
   document.getElementById('acc-edit-btn').classList.remove('hidden');
@@ -720,8 +720,8 @@ function saveAccount() {
 }
 
 function logoutCustomer() {
-  sessionStorage.removeItem('dealradar_user');
-  sessionStorage.removeItem('dealradar_cart');
+  localStorage.removeItem('dealradar_user');
+  localStorage.removeItem('dealradar_cart');
   window.location.href = 'index.html';
 }
 
@@ -729,7 +729,7 @@ function logoutCustomer() {
 // STORE OWNER PAGE
 // ============================================
 function initStore() {
-  const store = JSON.parse(sessionStorage.getItem('dealradar_store') || 'null');
+  const store = JSON.parse(localStorage.getItem('dealradar_store') || 'null');
   if (!store) { window.location.href = 'index.html'; return; }
   State.currentStore = store;
   // Set hero info
@@ -990,7 +990,7 @@ function saveSOAccount() {
   store.address = document.getElementById('so-acc-address')?.value || store.address;
   store.category = document.getElementById('so-acc-category')?.value || store.category;
   State.currentStore = store;
-  sessionStorage.setItem('dealradar_store', JSON.stringify(store));
+  localStorage.setItem('dealradar_store', JSON.stringify(store));
 
   const inputs = document.querySelectorAll('#so-account-form .form-input:not(.disabled-field)');
   const selects = document.querySelectorAll('#so-account-form .form-select');
@@ -1005,6 +1005,6 @@ function saveSOAccount() {
 }
 
 function logoutStore() {
-  sessionStorage.removeItem('dealradar_store');
+  localStorage.removeItem('dealradar_store');
   window.location.href = 'index.html';
 }
