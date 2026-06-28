@@ -205,21 +205,20 @@ function switchAuthTab(portal, tab, btn) {
 // Customer Login
 function customerLogin() {
 
-  const u = document.getElementById('c-username')?.value.trim();
+  const email = document.getElementById('c-email')?.value.trim();
   const p = document.getElementById('c-password')?.value.trim();
 
-  if (!u || !p) {
+  if (!email || !p) {
     showToast('Please enter username/email and password', 'error');
     return;
   }
 
   const customers = JSON.parse(sessionStorage.getItem('dealradar_customers')) || [];
 
-  const user = customers.find(c =>
-      c.email.toLowerCase() === u.toLowerCase() ||
-      c.username.toLowerCase() === u.toLowerCase()
-  );
-
+  const user = customers.find(
+    c => c.email.toLowerCase() === email.toLowerCase()
+);
+   
   if (!user) {
     showToast('User not registered. Please register first.', 'error');
 
@@ -268,8 +267,7 @@ function customerRegister() {
     email,
     phone,
     password,
-    address,
-    username: name.split(' ')[0].toLowerCase()
+    address
   };
 
   customers.push(user);
