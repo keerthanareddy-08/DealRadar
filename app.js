@@ -206,18 +206,42 @@ function switchAuthTab(portal, tab, btn) {
 function customerLogin() {
   const u = document.getElementById('c-username')?.value.trim();
   const p = document.getElementById('c-password')?.value.trim();
-  if (!u || !p) { showToast('Please enter username and password', 'error'); return; }
-  // Simulate login
-  State.currentUser = {
-    name: u,
-    email: `${u.toLowerCase()}@email.com`,
-    phone: '+91 98765 43210',
-    address: '12, MG Road, Bengaluru, Karnataka 560001',
-    username: u,
-  };
-  sessionStorage.setItem('dealradar_user', JSON.stringify(State.currentUser));
+
+  if (!u || !p) {
+    showToast('Please enter username and password', 'error');
+    return;
+  }
+
+  // Get registered customers
+  const customers = JSON.parse(sessionStorage.getItem('customers')) || [];
+
+  // Find customer by username
+  const user = customers.find(c => c.username === u);
+
+  if (!user) {
+    showToast('User not registered. Please register first.', 'error');
+
+    // Switch to Register tab
+    switchCustomerTab('register');   // Use your actual function name if different
+
+    // Prefill username (optional)
+    document.getElementById('r-username').value = u;
+
+    return;
+  }
+
+  // Check password
+  if (user.password !== p) {
+    showToast('Incorrect password.', 'error');
+    return;
+  }
+
+  // Login success
+  State.currentUser = user;
+  sessionStorage.setItem('dealradar_user', JSON.stringify(user));
   window.location.href = 'customer.html';
 }
+
 
 // Customer Register
 function customerRegister() {
@@ -237,19 +261,31 @@ function customerRegister() {
 
 // Store Login
 function storeLogin() {
-  const sid = document.getElementById('s-storeid')?.value.trim();
-  const p = document.getElementById('s-password')?.value.trim();
-  if (!sid || !p) { showToast('Please enter Store ID and password', 'error'); return; }
-  State.currentStore = {
-    storeId: sid,
-    storeName: 'My Local Store',
-    ownerName: 'Store Owner',
-    email: 'store@email.com',
-    phone: '+91 99887 76655',
-    address: '45, Commercial Street, Bengaluru',
-    category: 'grocery',
-  };
-  sessionStorage.setItem('dealradar_store', JSON.stringify(State.currentStore));
+  const sid = document.getElementById('s-storeid').value.trim();
+  const p = document.getElementById('s-password').value.trim();
+
+  if (!sid || !p) {
+      showToast('Please enter Store ID and password', 'error');
+      return;
+  }
+
+  const stores = JSON.parse(sessionStorage.getItem('dealradar_stores')) || [];
+
+  const store = stores.find(s => s.storeId === sid);
+
+  if (!store) {
+      showToast('Store not registered. Please register first.', 'error');
+      return;
+  }
+
+  if (store.password !== p) {
+      showToast('Incorrect password.', 'error');
+      return;
+  }
+
+  State.currentStore = store;
+  sessionStorage.setItem('dealradar_store', JSON.stringify(store));
+
   window.location.href = 'store-owner.html';
 }
 
@@ -266,24 +302,43 @@ function storeRegisterRequest() {
     showToast('Please fill all fields', 'error'); return;
   }
   // Save pending store data
-  const pendingStore = { name, storeName, category, phone, email, address };
+  const pendingStore = { name, storeName, category, phone, email, address, password };
   sessionStorage.setItem('dealradar_pending_store', JSON.stringify(pendingStore));
   showModal('modal-request-submitted');
 }
 
 function simulateApproval() {
   hideModal('modal-request-submitted');
-  // Generate store ID
+
   const sid = 'STR-' + Math.floor(10000 + Math.random() * 90000);
   document.getElementById('generated-store-id').textContent = sid;
 
-  const pending = JSON.parse(sessionStorage.getItem('dealradar_pending_store') || '{}');
+  // Get pending store
+  const pending = JSON.parse(sessionStorage.getItem('dealradar_pending_store')) || {};
+
   pending.storeId = sid;
-  sessionStorage.setItem('dealradar_pending_store', JSON.stringify(pending));
 
-  setTimeout(() => { showModal('modal-approved'); }, 400);
+  // Get existing registered stores
+  const stores = JSON.parse(sessionStorage.getItem('dealradar_stores')) || [];
+
+  // Save new registered store
+  stores.push({
+      storeId: sid,
+      storeName: pending.storeName,
+      ownerName: pending.name,
+      email: pending.email,
+      phone: pending.phone,
+      address: pending.address,
+      category: pending.category,
+      password: pending.password
+  });
+
+  sessionStorage.setItem('dealradar_stores', JSON.stringify(stores));
+
+  setTimeout(() => {
+      showModal('modal-approved');
+  }, 400);
 }
-
 function goToStoreLogin() {
   hideModal('modal-approved');
   const pending = JSON.parse(sessionStorage.getItem('dealradar_pending_store') || '{}');
